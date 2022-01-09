@@ -5,12 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AuthorApp {
+public class AuthorUpdate {
 
 	public static void main(String[] args) {
-		// 3., 4. 공부!!!. 여기서 작성한 커리문은 auto commit 됨.
+		// update 문
 		
-		//insert문
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -27,11 +26,13 @@ public class AuthorApp {
 		    // 3. SQL문 준비 / 바인딩 / 실행  *****
 		    
 			//문자열 만들기 --> ?주의
-			String query ="";   //쿼리문 만들기 --> ?주의
+			String query ="";   
 		    
 		    //query = query + "문자열"
-		    query += " insert into author "; 
-		    query += " values(seq_author_id.nextval, ?, ? ) " ; //맨 앞 띄어쓰기 필수!! 없으면 authorvalues로 되어 오류
+		    query += " update author "; 
+		    query += " set author_name = ?, " ;
+		    query += "     author_desc = ? " ;
+		    query += " where author_id = ? " ;
 		    System.out.println(query);
 		    
 		    
@@ -39,14 +40,15 @@ public class AuthorApp {
 		    pstmt = conn.prepareStatement(query);
 		    
 		    //바인딩
-		    pstmt.setString(1, "이문열");   //첫번째 ? 데이터(문자라서 set String)
-		    pstmt.setString(2, "경북 영양");//두번째 ? 데이터
+		    pstmt.setString(1, "김문열");   
+		    pstmt.setString(2, "삼국지 작가");
+		    pstmt.setInt(3, 1);
 		    
 		    //실행
-		    int count = pstmt.executeUpdate(); //쿼리문 실행(1이면 성공, 0이면 실패)
+		    int count = pstmt.executeUpdate(); 
 			
 		    // 4.결과처리
-		    System.out.println(count + " 건이 저장되었습니다.");
+		    System.out.println(count + " 건이 수정되었습니다.");
 		    
 		    
 		} catch (ClassNotFoundException e) {
@@ -68,9 +70,6 @@ public class AuthorApp {
 		    }
 
 		}
-
-
-				
 
 	}
 
