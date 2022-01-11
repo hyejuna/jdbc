@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AuthorInsert {
+public class BookInsert2 {
 
 	public static void main(String[] args) {
-		// 3., 4. 공부!!!. 여기서 작성한 커리문은 auto commit 됨.
+		// 데이터 2개 한번에 삽입
 		
 		//insert문
 		// 0. import java.sql.*;
@@ -27,26 +27,42 @@ public class AuthorInsert {
 		    // 3. SQL문 준비 / 바인딩 / 실행  *****
 		    
 			//문자열 만들기 --> ?주의
-			String query ="";   //쿼리문 만들기 --> ?주의
+			String query ="";   
 		    
 		    //query = query + "문자열"
-		    query += " insert into author "; 
-		    query += " values(seq_author_id.nextval, ?, ? ) " ; //맨 앞 띄어쓰기 필수!! 없으면 authorvalues로 되어 오류
+		    query += " insert into book "; 
+		    query += " values(seq_book_id.nextval, ?, ?, ?, ? ) " ; 
 		    System.out.println(query);
 		    
 		    
 		    //문자열 쿼리문으로 만들기
 		    pstmt = conn.prepareStatement(query);
 		    
+		    /////첫번째 데이터 넣기
 		    //바인딩
-		    pstmt.setString(1, "김영하");   //첫번째 ? 데이터(문자라서 set String)
-		    pstmt.setString(2, "알쓸신잡");//두번째 ? 데이터
+		    pstmt.setString(1, "오직두사람");   
+		    pstmt.setString(2, "문학동네");
+		    pstmt.setString(3, "2017-05-04");
+		    pstmt.setInt(4, 6);
 		    
 		    //실행
-		    int count = pstmt.executeUpdate(); //쿼리문 실행(1이면 성공, 0이면 실패)
+		    int count = pstmt.executeUpdate(); 
 			
 		    // 4.결과처리
 		    System.out.println(count + " 건이 저장되었습니다.");
+		    
+		    /////두번째 데이터 넣기
+		    //바인딩
+		    pstmt.setString(1, "26년");   
+		    pstmt.setString(2, "재미주의");
+		    pstmt.setString(3, "2012-02-04");
+		    pstmt.setInt(4, 5);
+		    
+		    //실행
+		    int count2 = pstmt.executeUpdate(); 
+			
+		    // 4.결과처리
+		    System.out.println(count2 + " 건이 저장되었습니다.");
 		    
 		    
 		} catch (ClassNotFoundException e) {
